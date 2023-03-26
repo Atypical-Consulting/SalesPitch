@@ -34,6 +34,6 @@ public sealed class TypeRegistrar : ITypeRegistrar
             throw new ArgumentNullException(nameof(factory));
         }
 
-        _builder.AddSingleton(service, (provider) => factory());
+        _builder.AddSingleton(service, _ => factory());
     }
 }

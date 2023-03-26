@@ -35,8 +35,9 @@ dotnet build --configuration Release
 
 ```json
 {
-  "OpenAI": {
-    "ApiKey": "votre_clé_API"
+  "OpenAIServiceOptions": {
+    "ApiKey": "<your_openai_api_key>",
+    "Organization": "<your_organization_id>"
   }
 }
 ```
@@ -46,7 +47,7 @@ dotnet build --configuration Release
 Exécutez l'application en utilisant la commande suivante à la racine du projet :
 
 ```sh
-dotnet run --configuration Release --project SalesPitch
+dotnet run --configuration Release --project src/SalesPitch
 ```
 
 L'application vous guidera à travers plusieurs étapes pour générer un pitch de vente pour votre produit. Vous pouvez également utiliser les données de démonstration pour voir comment l'application fonctionne.
