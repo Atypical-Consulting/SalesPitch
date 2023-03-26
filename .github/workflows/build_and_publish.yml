@@ -11,8 +11,17 @@ jobs:
 
     strategy:
       matrix:
-        os: [linux, macos, windows]
-        rid: [linux-x64, osx-x64, win-x64]
+        kind: [ 'linux', 'macos', 'windows' ]
+        include:
+          - kind: linux
+            os: ubuntu-latest
+            target: linux-x64
+          - kind: macos
+            os: macos-latest
+            target: osx-x64
+          - kind: windows
+            os: windows-latest
+            target: win-x64
 
     steps:
     - name: Checkout repository
@@ -24,7 +33,7 @@ jobs:
         dotnet-version: '7.0.x'
 
     - name: Build and Publish
-      run: dotnet publish -c Release -r ${{ matrix.platform.rid }} -p:PublishSingleFile=true --self-contained=true
+      run: dotnet publish -c Release --runtime ${{ matrix.rid }} -p:PublishSingleFile=true --self-contained=true
 
     - name: Install dotnet-bundle CLI
       run: dotnet tool install --global dotnet-bundle
