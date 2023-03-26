@@ -33,7 +33,7 @@ jobs:
         dotnet-version: '7.0.x'
 
     - name: Build and Publish
-      run: dotnet publish -c Release --runtime ${{ matrix.rid }} -p:PublishSingleFile=true --self-contained=true
+      run: dotnet publish -c Release --runtime ${{ matrix.target }} -p:PublishSingleFile=true --self-contained=true
 
     - name: Install dotnet-bundle CLI
       run: dotnet tool install --global dotnet-bundle
