@@ -34,19 +34,3 @@ jobs:
 
     - name: Build and Publish
       run: dotnet publish -c Release --runtime ${{ matrix.target }} -p:PublishSingleFile=true --self-contained=true
-
-    - name: Install dotnet-bundle CLI
-      run: dotnet tool install --global dotnet-bundle
-
-    - name: Create Installer
-      run: |
-        dotnet bundle create -f "./src/SalesPitch/bin/Release/net6.0/${{ matrix.platform.rid }}/publish/SalesPitch" \
-          -o "./artifacts" \
-          --installer-name "SalesPitch-${{ matrix.platform.os }}" \
-          --platform "${{ matrix.platform.os }}"
-
-    - name: Upload Installer as Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: SalesPitch-${{ matrix.platform.os }}
-        path: artifacts/SalesPitch-${{ matrix.platform.os }}.*
