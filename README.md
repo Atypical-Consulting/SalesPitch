@@ -2,11 +2,23 @@
 
 SalesPitch est une application de génération de pitch de vente utilisant OpenAI GPT-3. Créez des pitchs de vente percutants pour vos produits en quelques étapes simples.
 
+![SalesPitch](./assets/salespitch.png)
+
 ## Fonctionnalités
 
 * Interagit avec OpenAI GPT-3.5 pour générer des pitchs de vente
-* Prend en charge plusieurs langues
+* Prend en charge plusieurs langues (Français et Anglais)
 * Comprend plusieurs cadres de pitch de vente
+  * AIDA (Attention, Interest, Desire, Action) 
+  * PAS (Problem-Agitate-Solve)
+  * USP (Unique Selling Proposition)
+  * Features-Benefits
+  * Storytelling
+  * WIIFM (What’s In It For Me)
+  * Youtility
+  * FAB (Features, Advantages, Benefits)
+  * HHE (Headline, Hook, Empathy)
+  * SUSPENSE (Surprise, Uniqueness, Specifics, Promise, Excitement, Newness, Story)
 * Interface utilisateur conviviale avec Spectre.Console
 * Possibilité d'utiliser des données de démonstration
 
@@ -59,3 +71,9 @@ Si vous souhaitez contribuer à ce projet, veuillez soumettre une pull request o
 ## Licence
 
 Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d'informations.
+
+## Remerciements
+
+* [OpenAI](https://openai.com/)
+* [Spectre.Console](https://spectreconsole.net/)
+* [Betalgo.OpenAI.GPT3](https://github.com/betalgo/openai)
