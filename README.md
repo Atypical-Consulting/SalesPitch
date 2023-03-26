@@ -66,13 +66,15 @@ L'application vous guidera à travers plusieurs étapes pour générer un pitch 
 
 ## Contribution
 
-Si vous souhaitez contribuer à ce projet, veuillez soumettre une pull request ou ouvrir un problème dans le dépôt GitHub.
+Si vous souhaitez contribuer à ce projet, veuillez soumettre une pull request ou ouvrir une issue dans le dépôt GitHub.
 
 ## Licence
 
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus d'informations.
+Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ## Remerciements
+
+Cette application a été inspirée l'article suivant : [Write A Great Chat GPT Sales Pitch in 5 Steps](https://txtly.ai/write-a-chat-gpt-sales-pitch/)
 
 * [OpenAI](https://openai.com/)
 * [Spectre.Console](https://spectreconsole.net/)
