@@ -7,5 +7,6 @@ namespace SalesPitch.Services.Language;
 public enum SupportedLanguage
 {
     English,
-    French
+    French,
+    Spanish
 }

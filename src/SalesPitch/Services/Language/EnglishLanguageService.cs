@@ -70,6 +70,7 @@ public class EnglishLanguageService : ILanguageService
         {
             SupportedLanguage.English => "English",
             SupportedLanguage.French => "French",
+            SupportedLanguage.Spanish => "Spanish",
             _ => throw new ArgumentOutOfRangeException(nameof(language), language, null)
         };
 

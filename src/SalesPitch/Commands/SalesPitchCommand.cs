@@ -203,6 +203,7 @@ public sealed class SalesPitchCommand
                 {
                     SupportedLanguage.English => "English",
                     SupportedLanguage.French => "Français",
+                    SupportedLanguage.Spanish => "Español",
                     _ => throw new ArgumentOutOfRangeException(nameof(x), x, null)
                 }));
 

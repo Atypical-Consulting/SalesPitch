@@ -17,6 +17,7 @@ var registrations = new ServiceCollection();
 registrations.AddSingleton<IConfiguration>(configuration);
 registrations.AddSingleton<EnglishLanguageService>();
 registrations.AddSingleton<FrenchLanguageService>();
+registrations.AddSingleton<SpanishLanguageService>();
 registrations.AddSingleton<SpectreLanguageServiceFactory>();
 registrations.AddOpenAIService();
 var registrar = new SalesPitch.Infrastructure.TypeRegistrar(registrations);

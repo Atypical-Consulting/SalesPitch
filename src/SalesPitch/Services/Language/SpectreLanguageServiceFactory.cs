@@ -16,6 +16,8 @@ public class SpectreLanguageServiceFactory
                    .GetService(typeof(EnglishLanguageService)) as ILanguageService,
                SupportedLanguage.French => _serviceProvider
                    .GetService(typeof(FrenchLanguageService)) as ILanguageService,
+               SupportedLanguage.Spanish => _serviceProvider
+                   .GetService(typeof(SpanishLanguageService)) as ILanguageService,
                _ => throw new InvalidOperationException($"Unsupported language: {language}")
            } 
            ?? throw new InvalidOperationException($"Language service not found for language: {language}");

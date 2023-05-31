@@ -68,10 +68,9 @@ public class FrenchLanguageService : ILanguageService
     public string LanguageMarkup(SupportedLanguage? language)
         => language switch
         {
-            SupportedLanguage.English
-                => "Anglais",
-            SupportedLanguage.French
-                => "Français",
+            SupportedLanguage.English => "Anglais",
+            SupportedLanguage.French  => "Français",
+            SupportedLanguage.Spanish => "Espagnol",
             _ => throw new ArgumentOutOfRangeException(nameof(language), language, null)
         };
 
