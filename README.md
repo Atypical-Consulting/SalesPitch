@@ -1,4 +1,4 @@
-# SalesPitch
+# SalesPitch [![Sparkline](https://stars.medv.io/Atypical-Consulting/SalesPitch.svg)](https://stars.medv.io/Atypical-Consulting/SalesPitch)
 
 SalesPitch est une application de génération de pitch de vente utilisant OpenAI GPT-3. Créez des pitchs de vente percutants pour vos produits en quelques étapes simples.
 
