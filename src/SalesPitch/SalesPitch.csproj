@@ -9,17 +9,17 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Betalgo.OpenAI.GPT3" Version="6.8.1" />
+      <PackageReference Include="Betalgo.OpenAI" Version="6.8.6" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="7.0.0" />
-      <PackageReference Include="Scrutor" Version="4.2.1" />
-      <PackageReference Include="Spectre.Console" Version="0.46.0" />
-      <PackageReference Include="Spectre.Console.Analyzer" Version="0.46.0">
+      <PackageReference Include="Scrutor" Version="4.2.2" />
+      <PackageReference Include="Spectre.Console" Version="0.47.0" />
+      <PackageReference Include="Spectre.Console.Analyzer" Version="0.47.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Spectre.Console.Cli" Version="0.46.0" />
+      <PackageReference Include="Spectre.Console.Cli" Version="0.47.0" />
     </ItemGroup>
 
     <ItemGroup>
