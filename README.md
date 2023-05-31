@@ -7,7 +7,7 @@ SalesPitch est une application de génération de pitch de vente utilisant OpenA
 ## Fonctionnalités
 
 * Interagit avec OpenAI GPT-3.5 pour générer des pitchs de vente
-* Prend en charge plusieurs langues (Français et Anglais)
+* Prend en charge plusieurs langues (Français, Anglais, Allemand et Espagnol)
 * Comprend plusieurs cadres de pitch de vente
   * AIDA (Attention, Interest, Desire, Action) 
   * PAS (Problem-Agitate-Solve)

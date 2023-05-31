@@ -71,6 +71,7 @@ public class FrenchLanguageService : ILanguageService
             SupportedLanguage.English => "Anglais",
             SupportedLanguage.French  => "Français",
             SupportedLanguage.Spanish => "Espagnol",
+            SupportedLanguage.German  => "Allemand",
             _ => throw new ArgumentOutOfRangeException(nameof(language), language, null)
         };
 

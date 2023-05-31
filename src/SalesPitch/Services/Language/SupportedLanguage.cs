@@ -8,5 +8,6 @@ public enum SupportedLanguage
 {
     English,
     French,
-    Spanish
+    Spanish,
+    German
 }
