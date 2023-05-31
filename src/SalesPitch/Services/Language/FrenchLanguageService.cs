@@ -7,7 +7,7 @@ public class FrenchLanguageService : ILanguageService
     public string GetChatGPTUserPrompt(SalesPitchSettings settings)
     {
         return $"""
-            Je veux que tu agisses en tant que spécialiste en copywriting et que tu écrives un argumentaire de vente pour le produit suivant en utilisant le framework de vente {settings.Framework}. 
+            Rédige un argumentaire de vente pour le produit suivant en utilisant le framework de vente {settings.Framework}. 
             Insiste sur les problèmes et les avantages. 
             Formule l'argumentaire de manière à ce qu'il puisse être présenté au public, avec des titres qui attirent l'attention tout au long de l'argumentaire, 
             n'ajoute pas d'instructions.
@@ -21,8 +21,8 @@ public class FrenchLanguageService : ILanguageService
     }
 
     public string GetChatGPTSetupSystemMessage()
-        => "Vous êtes un copywriter avec une expérience en vente. "
-           + "Vous travaillez sur un argumentaire de vente pour un produit.";
+        => "Tu agis en tant que copywriter avec 20 ans d'expérience en vente. "
+           + "Tu as pour mission de rédiger un argumentaire de vente pour un produit.";
 
     public string TableSettingKey()
         => "Réglage";
