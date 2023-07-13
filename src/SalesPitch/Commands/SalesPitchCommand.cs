@@ -1,7 +1,7 @@
-using OpenAI.GPT3.Interfaces;
-using OpenAI.GPT3.ObjectModels;
-using OpenAI.GPT3.ObjectModels.RequestModels;
-using OpenAI.GPT3.ObjectModels.ResponseModels;
+using OpenAI.Interfaces;
+using OpenAI.ObjectModels;
+using OpenAI.ObjectModels.RequestModels;
+using OpenAI.ObjectModels.ResponseModels;
 using SalesPitch.Extensions;
 using SalesPitch.Services.Language;
 using Spectre.Console;
@@ -99,7 +99,7 @@ public sealed class SalesPitchCommand
         // Send the request and process the response
         IAsyncEnumerable<ChatCompletionCreateResponse> completionResult = 
             _openAIService.ChatCompletion
-                .CreateCompletionAsStream(request, Models.ChatGpt3_5Turbo);
+                .CreateCompletionAsStream(request, Models.Gpt_4);
         
         await foreach (ChatCompletionCreateResponse completion in completionResult)
         {

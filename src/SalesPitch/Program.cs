@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Extensions;
 using Spectre.Console.Cli;
-using OpenAI.GPT3.Extensions;
 using SalesPitch.Commands;
 using SalesPitch.Services.Language;
 

@@ -1,4 +1,4 @@
-using OpenAI.GPT3.ObjectModels.ResponseModels;
+using OpenAI.ObjectModels.ResponseModels;
 
 namespace SalesPitch.Extensions;
 
