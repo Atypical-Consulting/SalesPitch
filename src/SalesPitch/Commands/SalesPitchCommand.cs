@@ -99,7 +99,7 @@ public sealed class SalesPitchCommand
         // Send the request and process the response
         IAsyncEnumerable<ChatCompletionCreateResponse> completionResult = 
             _openAIService.ChatCompletion
-                .CreateCompletionAsStream(request, Models.Gpt_4);
+                .CreateCompletionAsStream(request, Models.ChatGpt3_5Turbo);
         
         await foreach (ChatCompletionCreateResponse completion in completionResult)
         {
