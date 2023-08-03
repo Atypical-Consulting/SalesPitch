@@ -7,22 +7,35 @@ public class EnglishLanguageService : ILanguageService
     public string GetChatGPTUserPrompt(SalesPitchSettings settings)
     {
         return $"""
-            I want you to act as an expert copywriter and write a sales pitch for the following product using the {settings.Framework} Framework. 
-            Place extra emphasis on the problems and the benefits. 
-            Format the pitch for public display with attention-grabbing headlines throughout, 
-            do not add any instructions.
-            I want it print ready.
+            The structure should be based on the {settings.Framework} framework. 
+            Your focus should predominantly be on highlighting the product's challenges and advantages, 
+            using compelling headlines to draw in the audience.
+            The output must be print-ready without any instructions.
 
-            Product Name : {settings.Product}
-            Price        : {settings.Price}
-            Features     : {settings.Features}
-            Benefits     : {settings.Benefits}
+            Product Details:
+            Name : {settings.Product}
+            Price : {settings.Price}
+            Features : {settings.Features}
+            Benefits : {settings.Benefits}
+
+            Your expected output should be a detailed sales pitch, ideally between 500 and 750 words,
+            which meets the following criteria:
+
+            Uses the {settings.Framework} framework effectively.
+            Draws attention to both problems the product solves and its benefits.
+            Incorporates catchy headlines at relevant intervals throughout the pitch.
+            Is formatted and ready for print, devoid of any further instructions.
+            Please emulate the style of a seasoned advertising executive in your writing,
+            and keep the tone professional yet engaging.
+
+            Remember, the objective is to convince potential customers to invest in the product, 
+            not just provide information about it. Your pitch should make them feel that the product is a solution 
+            to their problems and a significant enhancement to their lives.
             """;
     }
 
     public string GetChatGPTSetupSystemMessage()
-        => "You are a copywriter with a background in sales. "
-           + "You are working on a sales pitch for a product.";
+        => "As an expert copywriter, your task is to develop an enticing sales pitch for the product mentioned below.";
 
     public string TableSettingKey()
         => "Setting";

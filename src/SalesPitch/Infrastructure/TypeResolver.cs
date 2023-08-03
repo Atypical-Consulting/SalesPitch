@@ -13,12 +13,9 @@ public sealed class TypeResolver : ITypeResolver, IDisposable
 
     public object? Resolve(Type? type)
     {
-        if (type == null)
-        {
-            return null;
-        }
-
-        return _provider.GetService(type);
+        return type == null
+            ? null
+            : _provider.GetService(type);
     }
 
     public void Dispose()

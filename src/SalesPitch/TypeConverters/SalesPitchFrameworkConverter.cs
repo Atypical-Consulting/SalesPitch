@@ -12,7 +12,7 @@ public class SalesPitchFrameworkConverter : TypeConverter
 
     public override object? ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         => value is string stringValue
-            ? Enum.TryParse<SalesPitchFramework>(stringValue, true, out var result)
+            ? Enum.TryParse(stringValue, true, out SalesPitchFramework result)
                 ? result
                 : throw new ArgumentException($"Cannot convert '{stringValue}' to SalesPitchFramework.")
             : base.ConvertFrom(context, culture, value);
@@ -25,12 +25,4 @@ public class SalesPitchFrameworkConverter : TypeConverter
         => destinationType == typeof(string) && value is SalesPitchFramework salesPitchFrameworkValue
             ? salesPitchFrameworkValue.ToString()
             : base.ConvertTo(context, culture, value, destinationType);
-}
-
-public static partial class StringExtensions
-{
-    public static SalesPitchFramework? ConvertToSalesPitchFramework(this string value)
-        => (SalesPitchFramework?)TypeDescriptor
-            .GetConverter(typeof(SalesPitchFramework))
-            .ConvertFrom(value);
 }

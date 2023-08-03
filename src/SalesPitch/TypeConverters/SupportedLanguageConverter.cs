@@ -20,11 +20,3 @@ public class SupportedLanguageConverter : TypeConverter
             }
             : null;
 }
-
-public static partial class StringExtensions
-{
-    public static SupportedLanguage? ConvertToSupportedLanguage(this string value)
-        => (SupportedLanguage?)TypeDescriptor
-            .GetConverter(typeof(SupportedLanguage))
-            .ConvertFrom(value);
-}

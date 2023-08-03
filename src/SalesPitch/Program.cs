@@ -6,7 +6,7 @@ using SalesPitch.Commands;
 using SalesPitch.Services.Language;
 
 // Load configuration
-var configuration = new ConfigurationBuilder()
+IConfigurationRoot configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddUserSecrets<Program>()
     .Build();

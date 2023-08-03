@@ -4,6 +4,7 @@ using Spectre.Console.Cli;
 
 namespace SalesPitch.Commands;
 
+// ReSharper disable once ClassNeverInstantiated.Global
 public sealed class SalesPitchSettings : CommandSettings
 {
     [CommandArgument(0, "[product]")]

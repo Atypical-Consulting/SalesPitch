@@ -14,6 +14,7 @@ namespace SalesPitch.Commands;
 ///     command for generating sales pitches. It uses OpenAI GPT-3 for generating the content and
 ///     the Spectre.Console library for creating a user-friendly CLI.
 /// </summary>
+// ReSharper disable once ClassNeverInstantiated.Global
 public sealed class SalesPitchCommand
     : AsyncCommand<SalesPitchSettings>
 {
@@ -53,7 +54,7 @@ public sealed class SalesPitchCommand
 
         // Prompt the user for various settings and store them
         settings.Language = AskLanguage();
-        var languageService = _spectreLanguageServiceFactory
+        ILanguageService languageService = _spectreLanguageServiceFactory
             .GetLanguageService(settings.Language);
 
         settings.Framework = AskSalesPitchFramework(languageService);
@@ -77,7 +78,7 @@ public sealed class SalesPitchCommand
         
         // Display a table with the settings
         AnsiConsole.WriteLine();
-        var table = GetSettingsTable(settings, languageService);
+        Table table = GetSettingsTable(settings, languageService);
         AnsiConsole.Write(table);
         AnsiConsole.WriteLine();
         
@@ -92,12 +93,12 @@ public sealed class SalesPitchCommand
             Messages = new List<ChatMessage>
             {
                 ChatMessage.FromSystem(languageService.GetChatGPTSetupSystemMessage()),
-                ChatMessage.FromUser(languageService.GetChatGPTUserPrompt(settings)),
+                ChatMessage.FromUser(languageService.GetChatGPTUserPrompt(settings))
             }
         };
         
         // Send the request and process the response
-        IAsyncEnumerable<ChatCompletionCreateResponse> completionResult = 
+        var completionResult = 
             _openAIService.ChatCompletion
                 .CreateCompletionAsStream(request, Models.ChatGpt3_5Turbo);
         
@@ -195,7 +196,7 @@ public sealed class SalesPitchCommand
             .ToArray();
 
         // prompt for language
-        var language = AnsiConsole.Prompt(
+        SupportedLanguage language = AnsiConsole.Prompt(
             new SelectionPrompt<SupportedLanguage>()
                 .Title("Select a language")
                 .AddChoices(supportedLanguages)
@@ -225,7 +226,7 @@ public sealed class SalesPitchCommand
             .ToArray();
 
         // prompt for framework
-        var salesPitchFramework = AnsiConsole.Prompt(
+        SalesPitchFramework salesPitchFramework = AnsiConsole.Prompt(
             new SelectionPrompt<SalesPitchFramework>()
                 .Title(languageService.SalesPitchFrameworkPrompt())
                 .AddChoices(salesPitchFrameworks)
@@ -242,7 +243,7 @@ public sealed class SalesPitchCommand
     private static bool AskIsDemo(ILanguageService languageService)
     {
         // prompt for demo data
-        var isDemo = AnsiConsole.Prompt(
+        bool isDemo = AnsiConsole.Prompt(
             new SelectionPrompt<bool>()
                 .Title(languageService.UseDemoDataPrompt())
                 .AddChoices(true, false)
