@@ -100,7 +100,7 @@ public sealed class SalesPitchCommand
         // Send the request and process the response
         var completionResult = 
             _openAIService.ChatCompletion
-                .CreateCompletionAsStream(request, Models.ChatGpt3_5Turbo);
+                .CreateCompletionAsStream(request, Models.Gpt_3_5_Turbo);
         
         await foreach (ChatCompletionCreateResponse completion in completionResult)
         {
