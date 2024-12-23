@@ -1,4 +1,4 @@
-using OpenAI.ObjectModels.ResponseModels;
+using Betalgo.Ranul.OpenAI.ObjectModels.ResponseModels;
 
 namespace SalesPitch.Extensions;
 
