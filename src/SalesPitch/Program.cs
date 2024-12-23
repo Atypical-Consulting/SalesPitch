@@ -1,6 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Betalgo.Ranul.OpenAI.Extensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OpenAI.Extensions;
 using Spectre.Console.Cli;
 using SalesPitch.Commands;
 using SalesPitch.Services.Language;
