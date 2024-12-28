@@ -22,6 +22,10 @@ SalesPitch is a sales pitch generation application using OpenAI GPT-4. Create im
 * User-friendly interface with Spectre.Console
 * Ability to use demo data
 
+## Stats
+
+![Alt](https://repobeats.axiom.co/api/embed/9e8cea0532101e0c02a5034825d6be9f1b40f732.svg "Repobeats analytics image")
+
 ## Installation
 
 Ensure that you have .NET 9.0 or a later version installed on your machine.
