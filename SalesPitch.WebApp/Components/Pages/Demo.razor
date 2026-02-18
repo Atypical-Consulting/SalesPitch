@@ -1,0 +1,220 @@
+﻿@page "/demo"
+@inject ISalesPitchService SalesPitchService
+@inject ISnackbar Snackbar
+
+<PageTitle>Demo - Sales Pitch Generator</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large">
+    <MudText Typo="Typo.h4" Class="mb-6">Demo Mode</MudText>
+    
+    <MudAlert Severity="Severity.Info" Class="mb-6">
+        <MudText>This demo uses pre-configured data for Microsoft Power BI Premium to showcase the sales pitch generation capabilities.</MudText>
+    </MudAlert>
+    
+    <MudGrid>
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-6" Elevation="3">
+                <MudText Typo="Typo.h6" Class="mb-4">Demo Product Information</MudText>
+                
+                <MudStack Spacing="3">
+                    <MudTextField Label="Product Name" 
+                                 Value="@_demoProduct" 
+                                 Variant="Variant.Outlined"
+                                 ReadOnly="true" />
+                    
+                    <MudTextField Label="Price" 
+                                 Value="@_demoPrice" 
+                                 Variant="Variant.Outlined"
+                                 ReadOnly="true" />
+                    
+                    <MudTextField Label="Features" 
+                                 Value="@_demoFeatures" 
+                                 Variant="Variant.Outlined"
+                                 Lines="4"
+                                 ReadOnly="true" />
+                    
+                    <MudTextField Label="Benefits" 
+                                 Value="@_demoBenefits" 
+                                 Variant="Variant.Outlined"
+                                 Lines="3"
+                                 ReadOnly="true" />
+                    
+                    <MudSelect Label="Sales Framework" 
+                              @bind-Value="_selectedFramework" 
+                              Variant="Variant.Outlined"
+                              AnchorOrigin="Origin.BottomCenter">
+                        @foreach (var framework in Enum.GetValues<SalesPitchFramework>())
+                        {
+                            <MudSelectItem Value="@framework">@GetFrameworkDisplayName(framework)</MudSelectItem>
+                        }
+                    </MudSelect>
+                    
+                    <MudSelect Label="Language" 
+                              @bind-Value="_selectedLanguage" 
+                              Variant="Variant.Outlined"
+                              AnchorOrigin="Origin.BottomCenter">
+                        @foreach (var language in Enum.GetValues<SupportedLanguage>())
+                        {
+                            <MudSelectItem Value="@language">@language.ToString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    
+                    <MudButton Variant="Variant.Filled" 
+                              Color="Color.Primary"
+                              StartIcon="@Icons.Material.Filled.Create"
+                              OnClick="@GenerateDemoPitch"
+                              Loading="@_isGenerating"
+                              Disabled="@_isGenerating"
+                              FullWidth="true"
+                              Class="mt-4">
+                        @(_isGenerating ? "Generating..." : "Generate Demo Pitch")
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+        
+        <MudItem xs="12" md="6">
+            <MudPaper Class="pa-6" Elevation="3" Style="min-height: 500px;">
+                <MudStack Spacing="3">
+                    <MudText Typo="Typo.h6">Generated Sales Pitch</MudText>
+                    
+                    @if (_isGenerating)
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Spacing="3" Class="pa-8">
+                            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                            <MudText Typo="Typo.body1">Generating your demo sales pitch...</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">
+                                Framework: @GetFrameworkDisplayName(_selectedFramework)
+                            </MudText>
+                        </MudStack>
+                    }
+                    else if (!string.IsNullOrEmpty(_generatedPitch))
+                    {
+                        <MudStack Spacing="3">
+                            <MudChip T="string" Text="@($"Framework: {GetFrameworkDisplayName(_selectedFramework)}")" 
+                                    Color="Color.Primary" 
+                                    Size="Size.Small" />
+                            
+                            <MudPaper Class="pa-4" Elevation="1" Style="background-color: var(--mud-palette-background-grey);">
+                                <MudText Typo="Typo.body1" Style="white-space: pre-wrap; line-height: 1.6;">
+                                    @_generatedPitch
+                                </MudText>
+                            </MudPaper>
+                            
+                            <MudStack Row="true" Spacing="2">
+                                <MudButton Variant="Variant.Outlined" 
+                                          Color="Color.Primary"
+                                          StartIcon="@Icons.Material.Filled.Refresh"
+                                          OnClick="@GenerateDemoPitch"
+                                          Size="Size.Small">
+                                    Regenerate
+                                </MudButton>
+                                
+                                <MudButton Variant="Variant.Text" 
+                                          Color="Color.Secondary"
+                                          StartIcon="@Icons.Material.Filled.Create"
+                                          Href="/generate"
+                                          Size="Size.Small">
+                                    Create Your Own
+                                </MudButton>
+                            </MudStack>
+                        </MudStack>
+                    }
+                    else
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Spacing="3" Class="pa-8">
+                            <MudIcon Icon="@Icons.Material.Filled.PlayArrow" Size="Size.Large" Color="Color.Primary" />
+                            <MudText Typo="Typo.h6" Align="Align.Center">Ready to see SalesPitch in action?</MudText>
+                            <MudText Typo="Typo.body1" Color="Color.Secondary" Align="Align.Center">
+                                Click the button above to generate a demo sales pitch using the Microsoft Power BI Premium example.
+                            </MudText>
+                        </MudStack>
+                    }
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+    
+    <MudPaper Class="pa-6 mt-6" Elevation="2">
+        <MudText Typo="Typo.h6" Class="mb-3">About the Demo</MudText>
+        <MudText Typo="Typo.body1" Class="mb-3">
+            This demo showcases how SalesPitch can generate compelling sales content using different frameworks. 
+            The example product (Microsoft Power BI Premium) demonstrates how the AI adapts its approach based on:
+        </MudText>
+        <MudList T="string">
+            <MudListItem T="string" Icon="@Icons.Material.Filled.Psychology" Text="Different sales frameworks (AIDA, PAS, Storytelling, etc.)" />
+            <MudListItem T="string" Icon="@Icons.Material.Filled.Language" Text="Multiple language support" />
+            <MudListItem T="string" Icon="@Icons.Material.Filled.Speed" Text="Real-time generation with professional quality" />
+            <MudListItem T="string" Icon="@Icons.Material.Filled.Tune" Text="Consistent structure while maintaining creativity" />
+        </MudList>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private readonly string _demoProduct = "Microsoft Power BI Premium";
+    private readonly string _demoPrice = "16,90 € by user/month";
+    private readonly string _demoFeatures = "Multiple data sources, Interactive reporting, Custom dashboards, Sharing and collaboration, Integration with other Microsoft services, Real-time data updates, Security and data governance";
+    private readonly string _demoBenefits = "Informed decision making, Increased productivity, Accessibility, Flexibility, Scalability, Continuous improvement";
+    
+    private SalesPitchFramework _selectedFramework = SalesPitchFramework.Storytelling;
+    private SupportedLanguage _selectedLanguage = SupportedLanguage.English;
+    private string _generatedPitch = string.Empty;
+    private bool _isGenerating;
+
+    private async Task GenerateDemoPitch()
+    {
+        if (_isGenerating) return;
+        
+        try
+        {
+            _isGenerating = true;
+            _generatedPitch = string.Empty;
+            StateHasChanged();
+            
+            var request = new SalesPitchRequest
+            {
+                Product = _demoProduct,
+                Price = _demoPrice,
+                Features = _demoFeatures,
+                Benefits = _demoBenefits,
+                Framework = _selectedFramework,
+                Language = _selectedLanguage,
+                IsDemo = true
+            };
+            
+            _generatedPitch = await SalesPitchService.GenerateSalesPitchAsync(request);
+            
+            if (!string.IsNullOrEmpty(_generatedPitch))
+            {
+                Snackbar.Add("Demo sales pitch generated successfully!", Severity.Success);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error generating demo pitch: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isGenerating = false;
+            StateHasChanged();
+        }
+    }
+
+    private static string GetFrameworkDisplayName(SalesPitchFramework framework)
+    {
+        return framework switch
+        {
+            SalesPitchFramework.AIDA => "AIDA (Attention, Interest, Desire, Action)",
+            SalesPitchFramework.PAS => "PAS (Problem-Agitate-Solve)",
+            SalesPitchFramework.USP => "USP (Unique Selling Proposition)",
+            SalesPitchFramework.FeaturesBenefits => "Features-Benefits",
+            SalesPitchFramework.Storytelling => "Storytelling",
+            SalesPitchFramework.WIIFM => "WIIFM (What's In It For Me)",
+            SalesPitchFramework.Youtility => "Youtility",
+            SalesPitchFramework.FAB => "FAB (Features, Advantages, Benefits)",
+            SalesPitchFramework.HHE => "HHE (Headline, Hook, Empathy)",
+            SalesPitchFramework.SUSPENSE => "SUSPENSE (Surprise, Uniqueness, Specifics, Promise, Excitement, Newness, Story)",
+            _ => framework.ToString()
+        };
+    }
+}

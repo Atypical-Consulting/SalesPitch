@@ -1,0 +1,59 @@
+﻿@inherits LayoutComponentBase
+@inject ThemeService ThemeService
+
+<MudThemeProvider Theme="@ThemeService.Theme" IsDarkMode="@ThemeService.IsDarkMode" />
+<MudDialogProvider />
+<MudSnackbarProvider />
+<MudPopoverProvider />
+
+<MudLayout>
+    <MudAppBar Elevation="2" Class="app-bar-gradient">
+        <MudIconButton Icon="Icons.Material.Filled.Menu" 
+                      Color="Color.Inherit" 
+                      Edge="Edge.Start" 
+                      OnClick="@(() => DrawerToggle())" 
+                      Class="menu-button" />
+        <MudIcon Icon="Icons.Material.Filled.TrendingUp" Class="mr-3" Color="Color.Primary" />
+        <MudText Typo="Typo.h5" Class="brand-text">SalesPitch</MudText>
+        <MudSpacer />
+        
+        <MudTooltip Text="Toggle Dark Mode">
+            <MudIconButton Icon="@(ThemeService.IsDarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.DarkMode)" 
+                          Color="Color.Inherit" 
+                          OnClick="@ThemeService.ToggleDarkMode"
+                          Class="theme-toggle" />
+        </MudTooltip>
+        
+        <MudTooltip Text="View on GitHub">
+            <MudIconButton Icon="Icons.Custom.Brands.GitHub" 
+                          Color="Color.Inherit" 
+                          Href="https://github.com/Atypical-Consulting/SalesPitch" 
+                          Target="_blank"
+                          Class="github-link" />
+        </MudTooltip>
+    </MudAppBar>
+    
+    <MudDrawer @bind-Open="_drawerOpen" 
+              ClipMode="DrawerClipMode.Always" 
+              Elevation="3"
+              Variant="DrawerVariant.Mini"
+              OpenMiniOnHover="true"
+              Class="custom-drawer">
+        <NavMenu />
+    </MudDrawer>
+    
+    <MudMainContent Class="main-content">
+        <MudContainer Class="content-container" MaxWidth="MaxWidth.ExtraLarge">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    bool _drawerOpen = true;
+
+    void DrawerToggle()
+    {
+        _drawerOpen = !_drawerOpen;
+    }
+}

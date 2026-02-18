@@ -1,0 +1,454 @@
+﻿@page "/generate"
+@using SalesPitch.WebApp.Components.Shared
+@inject ISalesPitchService SalesPitchService
+@inject ISnackbar Snackbar
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Generate Sales Pitch</PageTitle>
+
+<div class="generate-page">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+        <!-- Page Header -->
+        <div class="page-header mb-8">
+            <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                <div class="page-icon-container">
+                    <MudIcon Icon="Icons.Material.Filled.AutoAwesome" Size="Size.Large" Class="page-icon" />
+                </div>
+                <MudText Typo="Typo.h3" Align="Align.Center" Class="page-title">
+                    Generate Sales Pitch
+                </MudText>
+                <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Secondary" Class="page-subtitle">
+                    Transform your product details into compelling sales content using AI
+                </MudText>
+            </MudStack>
+        </div>
+        
+        <MudGrid Spacing="6">
+            <MudItem xs="12" lg="6">
+                <FormCard Title="Product Information" 
+                         Subtitle="Tell us about your product to create the perfect pitch"
+                         Icon="@Icons.Material.Filled.Inventory">
+                    
+                    <EditForm Model="@_request" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        
+                        <MudStack Spacing="5">
+                            <!-- Product Name -->
+                            <div class="form-group">
+                                <MudTextField Label="Product Name" 
+                                             @bind-Value="_request.Product" 
+                                             For="@(() => _request.Product)"
+                                             Variant="Variant.Outlined"
+                                             Required="true"
+                                             Adornment="Adornment.Start"
+                                             AdornmentIcon="@Icons.Material.Filled.Label"
+                                             HelperText="Enter the name of your product or service"
+                                             Class="enhanced-input" />
+                            </div>
+                            
+                            <!-- Price -->
+                            <div class="form-group">
+                                <MudTextField Label="Price" 
+                                             @bind-Value="_request.Price" 
+                                             For="@(() => _request.Price)"
+                                             Variant="Variant.Outlined"
+                                             Required="true"
+                                             Adornment="Adornment.Start"
+                                             AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+                                             HelperText="e.g., $99/month, €299, Free trial"
+                                             Class="enhanced-input" />
+                            </div>
+                            
+                            <!-- Features -->
+                            <div class="form-group">
+                                <MudTextField Label="Key Features" 
+                                             @bind-Value="_request.Features" 
+                                             For="@(() => _request.Features)"
+                                             Variant="Variant.Outlined"
+                                             Lines="4"
+                                             Required="true"
+                                             Adornment="Adornment.Start"
+                                             AdornmentIcon="@Icons.Material.Filled.Star"
+                                             HelperText="List the main features that make your product special"
+                                             Class="enhanced-input" />
+                            </div>
+                            
+                            <!-- Benefits -->
+                            <div class="form-group">
+                                <MudTextField Label="Customer Benefits" 
+                                             @bind-Value="_request.Benefits" 
+                                             For="@(() => _request.Benefits)"
+                                             Variant="Variant.Outlined"
+                                             Lines="4"
+                                             Required="true"
+                                             Adornment="Adornment.Start"
+                                             AdornmentIcon="@Icons.Material.Filled.TrendingUp"
+                                             HelperText="Describe how customers will benefit from your product"
+                                             Class="enhanced-input" />
+                            </div>
+                            
+                            <!-- Framework Selection -->
+                            <div class="form-group">
+                                <MudSelect Label="Sales Framework" 
+                                          @bind-Value="_request.Framework" 
+                                          Variant="Variant.Outlined"
+                                          AnchorOrigin="Origin.BottomCenter"
+                                          Adornment="Adornment.Start"
+                                          AdornmentIcon="@Icons.Material.Filled.Psychology"
+                                          HelperText="Choose the sales methodology for your pitch"
+                                          Class="enhanced-select">
+                                    @foreach (var framework in Enum.GetValues<SalesPitchFramework>())
+                                    {
+                                        <MudSelectItem Value="@framework">@GetFrameworkDisplayName(framework)</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                            
+                            <!-- Language Selection -->
+                            <div class="form-group">
+                                <MudSelect Label="Language" 
+                                          @bind-Value="_request.Language" 
+                                          Variant="Variant.Outlined"
+                                          AnchorOrigin="Origin.BottomCenter"
+                                          Adornment="Adornment.Start"
+                                          AdornmentIcon="@Icons.Material.Filled.Language"
+                                          HelperText="Select the language for your pitch"
+                                          Class="enhanced-select">
+                                    @foreach (var language in Enum.GetValues<SupportedLanguage>())
+                                    {
+                                        <MudSelectItem Value="@language">@language.ToString()</MudSelectItem>
+                                    }
+                                </MudSelect>
+                            </div>
+                            
+                            <!-- Demo Data Toggle -->
+                            <div class="form-group">
+                                <MudCard Class="demo-card" Elevation="1">
+                                    <MudCardContent Class="pa-4">
+                                        <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                                            <MudStack Spacing="1">
+                                                <MudText Typo="Typo.subtitle1" Class="demo-label">Use Demo Data</MudText>
+                                                <MudText Typo="Typo.body2" Color="Color.Secondary">Fill form with sample product information</MudText>
+                                            </MudStack>
+                                            <MudSwitch @bind-Value="_request.IsDemo" 
+                                                      Color="Color.Primary"
+                                                      UnCheckedColor="Color.Default"
+                                                      Class="demo-switch" />
+                                        </MudStack>
+                                    </MudCardContent>
+                                </MudCard>
+                            </div>
+                            
+                            <!-- Action Buttons -->
+                            <div class="form-actions">
+                                <MudStack Row="true" Spacing="3" Justify="Justify.Center" Class="mt-6">
+                                    <MudButton ButtonType="ButtonType.Submit" 
+                                              Variant="Variant.Filled" 
+                                              Color="Color.Primary"
+                                              StartIcon="@Icons.Material.Filled.AutoAwesome"
+                                              Size="Size.Large"
+                                              Loading="@_isGenerating"
+                                              Disabled="@_isGenerating"
+                                              Class="action-button primary-button">
+                                        @(_isGenerating ? "Generating..." : "Generate Pitch")
+                                    </MudButton>
+                                    
+                                    <MudButton Variant="Variant.Outlined" 
+                                              Color="Color.Secondary"
+                                              StartIcon="@Icons.Material.Filled.Refresh"
+                                              Size="Size.Large"
+                                              OnClick="@ClearForm"
+                                              Disabled="@_isGenerating"
+                                              Class="action-button">
+                                        Clear Form
+                                    </MudButton>
+                                    
+                                    <MudButton Variant="Variant.Text" 
+                                              Color="Color.Info"
+                                              StartIcon="@Icons.Material.Filled.AutoFixHigh"
+                                              Size="Size.Large"
+                                              OnClick="@LoadDemoData"
+                                              Disabled="@_isGenerating"
+                                              Class="action-button">
+                                        Load Demo
+                                    </MudButton>
+                                </MudStack>
+                            </div>
+                        </MudStack>
+                    </EditForm>
+                </FormCard>
+            </MudItem>
+        
+        <MudItem xs="12" lg="6">
+            <FormCard Title="Generated Sales Pitch" 
+                     Subtitle="Your AI-powered sales content will appear here"
+                     Icon="@Icons.Material.Filled.Description">
+                <MudStack Spacing="4">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">Generated Sales Pitch</MudText>
+                        @if (!string.IsNullOrEmpty(_generatedPitch))
+                        {
+                            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" 
+                                          Color="Color.Primary"
+                                          OnClick="@CopyToClipboard"
+                                          Title="Copy to clipboard" />
+                        }
+                    </MudStack>
+                    
+                    @if (_isGenerating)
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Spacing="3" Class="pa-8">
+                            <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                            <MudText Typo="Typo.body1">Generating your sales pitch...</MudText>
+                        </MudStack>
+                    }
+                    else if (!string.IsNullOrEmpty(_generatedPitch))
+                    {
+                        <MudPaper Class="pa-4" Elevation="1" Style="background-color: var(--mud-palette-background-grey);">
+                            <MudText Typo="Typo.body1" Style="white-space: pre-wrap; line-height: 1.6;">
+                                @_generatedPitch
+                            </MudText>
+                        </MudPaper>
+                    }
+                    else
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Spacing="3" Class="pa-8">
+                            <MudIcon Icon="@Icons.Material.Filled.Description" Size="Size.Large" Color="Color.Secondary" />
+                            <MudText Typo="Typo.body1" Color="Color.Secondary">
+                                Your generated sales pitch will appear here
+                            </MudText>
+                        </MudStack>
+                    }
+                </MudStack>
+            </FormCard>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+</div>
+
+@code {
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string? Framework { get; set; }
+
+    private SalesPitchRequest _request = new();
+    private string _generatedPitch = string.Empty;
+    private bool _isGenerating = false;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(Framework) && Enum.TryParse<SalesPitchFramework>(Framework, true, out var framework))
+        {
+            _request.Framework = framework;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (_isGenerating) return;
+        
+        try
+        {
+            _isGenerating = true;
+            _generatedPitch = string.Empty;
+            StateHasChanged();
+            
+            if (_request.IsDemo)
+            {
+                LoadDemoDataIntoRequest();
+            }
+            
+            _generatedPitch = await SalesPitchService.GenerateSalesPitchAsync(_request);
+            
+            if (!string.IsNullOrEmpty(_generatedPitch))
+            {
+                Snackbar.Add("Sales pitch generated successfully!", Severity.Success);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error generating pitch: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isGenerating = false;
+            StateHasChanged();
+        }
+    }
+
+    private void ClearForm()
+    {
+        _request = new SalesPitchRequest();
+        _generatedPitch = string.Empty;
+    }
+
+    private void LoadDemoData()
+    {
+        _request.Product = "Microsoft Power BI Premium";
+        _request.Price = "16,90 € by user/month";
+        _request.Features = "Multiple data sources, Interactive reporting, Custom dashboards, Sharing and collaboration, Integration with other Microsoft services, Real-time data updates, Security and data governance";
+        _request.Benefits = "Informed decision making, Increased productivity, Accessibility, Flexibility, Scalability, Continuous improvement";
+        _request.Framework = SalesPitchFramework.Storytelling;
+        _request.Language = SupportedLanguage.English;
+        _request.IsDemo = true;
+    }
+
+    private void LoadDemoDataIntoRequest()
+    {
+        if (_request.IsDemo)
+        {
+            _request.Product = "Microsoft Power BI Premium";
+            _request.Price = "16,90 € by user/month";
+            _request.Features = "Multiple data sources, Interactive reporting, Custom dashboards, Sharing and collaboration, Integration with other Microsoft services, Real-time data updates, Security and data governance";
+            _request.Benefits = "Informed decision making, Increased productivity, Accessibility, Flexibility, Scalability, Continuous improvement";
+        }
+    }
+
+    private static string GetFrameworkDisplayName(SalesPitchFramework framework)
+    {
+        return framework switch
+        {
+            SalesPitchFramework.AIDA => "AIDA (Attention, Interest, Desire, Action)",
+            SalesPitchFramework.PAS => "PAS (Problem-Agitate-Solve)",
+            SalesPitchFramework.USP => "USP (Unique Selling Proposition)",
+            SalesPitchFramework.FeaturesBenefits => "Features-Benefits",
+            SalesPitchFramework.Storytelling => "Storytelling",
+            SalesPitchFramework.WIIFM => "WIIFM (What's In It For Me)",
+            SalesPitchFramework.Youtility => "Youtility",
+            SalesPitchFramework.FAB => "FAB (Features, Advantages, Benefits)",
+            SalesPitchFramework.HHE => "HHE (Headline, Hook, Empathy)",
+            SalesPitchFramework.SUSPENSE => "SUSPENSE (Surprise, Uniqueness, Specifics, Promise, Excitement, Newness, Story)",
+            _ => framework.ToString()
+        };
+    }
+
+    private async Task CopyToClipboard()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", _generatedPitch);
+            Snackbar.Add("Copied to clipboard!", Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add("Failed to copy to clipboard", Severity.Warning);
+        }
+    }
+}
+
+<style>
+    .generate-page {
+        padding: 2rem 0;
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%);
+        min-height: calc(100vh - 64px);
+    }
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-icon-container {
+        width: 64px;
+        height: 64px;
+        background: var(--primary-gradient);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto;
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .page-icon {
+        color: white;
+        font-size: 2rem !important;
+    }
+
+    .page-title {
+        font-weight: 700;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .page-subtitle {
+        max-width: 600px;
+        margin: 0 auto;
+        opacity: 0.8;
+    }
+
+    .form-group {
+        position: relative;
+        animation: slideInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .form-group:nth-child(1) { animation-delay: 0.1s; }
+    .form-group:nth-child(2) { animation-delay: 0.2s; }
+    .form-group:nth-child(3) { animation-delay: 0.3s; }
+    .form-group:nth-child(4) { animation-delay: 0.4s; }
+    .form-group:nth-child(5) { animation-delay: 0.5s; }
+    .form-group:nth-child(6) { animation-delay: 0.6s; }
+    .form-group:nth-child(7) { animation-delay: 0.7s; }
+
+    .enhanced-input, .enhanced-select {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .enhanced-input:hover, .enhanced-select:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .demo-card {
+        background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+        border: 2px solid rgba(99, 102, 241, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .demo-card:hover {
+        border-color: rgba(99, 102, 241, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(99, 102, 241, 0.1);
+    }
+
+    .demo-label {
+        font-weight: 600;
+        color: #6366f1;
+    }
+
+    .demo-switch {
+        transform: scale(1.2);
+    }
+
+    .form-actions {
+        animation: fadeInUp 0.8s ease-out;
+        animation-delay: 0.8s;
+        animation-fill-mode: both;
+    }
+
+    .action-button {
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .action-button:hover {
+        transform: translateY(-2px);
+    }
+
+    .primary-button {
+        background: var(--primary-gradient) !important;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3) !important;
+    }
+
+    .primary-button:hover {
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4) !important;
+    }
+
+</style>
