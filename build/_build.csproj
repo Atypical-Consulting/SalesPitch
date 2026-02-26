@@ -15,8 +15,4 @@
     <PackageReference Include="Nuke.Common" Version="9.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Remove="..\.github\workflows\qodana_code_quality.yml" />
-  </ItemGroup>
-
 </Project>
