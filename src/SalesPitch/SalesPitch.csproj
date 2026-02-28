@@ -10,9 +10,9 @@
 
     <ItemGroup>
       <PackageReference Include="Betalgo.Ranul.OpenAI" Version="9.2.6" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.13" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.13" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.13" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.3" />
       <PackageReference Include="Scrutor" Version="7.0.0" />
       <PackageReference Include="Spectre.Console" Version="0.54.0" />
       <PackageReference Include="Spectre.Console.Analyzer" Version="1.0.0">
