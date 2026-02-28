@@ -42,7 +42,8 @@ public sealed class SalesPitchCommand
     /// <returns>The exit code</returns>
     public override async Task<int> ExecuteAsync(
         CommandContext context,
-        SalesPitchSettings settings)
+        SalesPitchSettings settings,
+        CancellationToken cancellationToken)
     {
         // Display a header and a rule
         AnsiConsole.Write(
