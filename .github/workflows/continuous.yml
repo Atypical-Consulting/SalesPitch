@@ -16,7 +16,15 @@
 
 name: continuous
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ubuntu-latest:
@@ -32,6 +40,7 @@ jobs:
           dotnet-version: |
             8.0.x
             9.0.x
+            10.0.x
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v5
         with:
