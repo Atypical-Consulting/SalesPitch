@@ -2,24 +2,24 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UserSecretsId>458c1c01-d3e1-4d45-9846-e8beb07f93ce</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Betalgo.Ranul.OpenAI" Version="9.0.1" />
-      <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.0" />
-      <PackageReference Include="Scrutor" Version="5.0.3" />
-      <PackageReference Include="Spectre.Console" Version="0.49.1" />
+      <PackageReference Include="Betalgo.Ranul.OpenAI" Version="9.2.6" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.3" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="10.0.3" />
+      <PackageReference Include="Scrutor" Version="7.0.0" />
+      <PackageReference Include="Spectre.Console" Version="0.54.0" />
       <PackageReference Include="Spectre.Console.Analyzer" Version="1.0.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <PackageReference Include="Spectre.Console.Cli" Version="0.49.1" />
+      <PackageReference Include="Spectre.Console.Cli" Version="0.53.1" />
     </ItemGroup>
 
     <ItemGroup>

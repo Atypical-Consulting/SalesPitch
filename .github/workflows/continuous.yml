@@ -16,24 +16,33 @@
 
 name: continuous
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             8.0.x
             9.0.x
+            10.0.x
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             .nuke/temp
