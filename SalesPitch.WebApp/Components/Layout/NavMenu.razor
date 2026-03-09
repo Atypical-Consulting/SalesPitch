@@ -1,0 +1,99 @@
+﻿<MudNavMenu Class="nav-menu-custom">
+    <div class="nav-header">
+        <MudText Typo="Typo.caption" Class="nav-section-title">MAIN</MudText>
+    </div>
+    
+    <MudNavLink Href="/" 
+               Match="NavLinkMatch.All" 
+               Icon="Icons.Material.Filled.Home"
+               Class="nav-link-custom">
+        <MudText>Home</MudText>
+    </MudNavLink>
+    
+    <MudNavLink Href="/generate" 
+               Match="NavLinkMatch.Prefix" 
+               Icon="Icons.Material.Filled.AutoAwesome"
+               Class="nav-link-custom">
+        <MudText>Generate Pitch</MudText>
+    </MudNavLink>
+    
+    <MudNavLink Href="/generate-stream" 
+               Match="NavLinkMatch.Prefix" 
+               Icon="Icons.Material.Filled.Bolt"
+               Class="nav-link-custom">
+        <MudText>Live Stream</MudText>
+    </MudNavLink>
+    
+    <MudNavLink Href="/demo" 
+               Match="NavLinkMatch.Prefix" 
+               Icon="Icons.Material.Filled.Rocket"
+               Class="nav-link-custom">
+        <MudText>Demo</MudText>
+    </MudNavLink>
+    
+    <MudNavLink Href="/frameworks" 
+               Match="NavLinkMatch.Prefix" 
+               Icon="Icons.Material.Filled.Psychology"
+               Class="nav-link-custom">
+        <MudText>Frameworks Guide</MudText>
+    </MudNavLink>
+    
+    <MudDivider Class="nav-divider" />
+    
+    <div class="nav-header">
+        <MudText Typo="Typo.caption" Class="nav-section-title">QUICK ACCESS</MudText>
+    </div>
+    
+    <MudNavGroup Icon="Icons.Material.Filled.Psychology" 
+                Expanded="false"
+                Class="nav-group-custom">
+        <TitleContent>
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <MudIcon Icon="@Icons.Material.Filled.Psychology" />
+                <MudText>Sales Frameworks</MudText>
+            </div>
+        </TitleContent>
+        <ChildContent>
+            <MudNavLink Href="/frameworks/aida" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Visibility"
+                       Class="nav-sub-link">AIDA</MudNavLink>
+            <MudNavLink Href="/frameworks/pas" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Problem"
+                       Class="nav-sub-link">PAS</MudNavLink>
+            <MudNavLink Href="/frameworks/usp" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Star"
+                       Class="nav-sub-link">USP</MudNavLink>
+            <MudNavLink Href="/frameworks/storytelling" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.MenuBook"
+                       Class="nav-sub-link">Storytelling</MudNavLink>
+            <MudNavLink Href="/frameworks/wiifm" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Person"
+                       Class="nav-sub-link">WIIFM</MudNavLink>
+            <MudNavLink Href="/frameworks/youtility" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Lightbulb"
+                       Class="nav-sub-link">Youtility</MudNavLink>
+            <MudNavLink Href="/frameworks/fab" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Build"
+                       Class="nav-sub-link">FAB</MudNavLink>
+            <MudNavLink Href="/frameworks/hhe" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.Favorite"
+                       Class="nav-sub-link">HHE</MudNavLink>
+            <MudNavLink Href="/frameworks/suspense" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.FlashOn"
+                       Class="nav-sub-link">SUSPENSE</MudNavLink>
+            <MudNavLink Href="/frameworks/features-benefits" 
+                       Match="NavLinkMatch.Prefix"
+                       Icon="Icons.Material.Filled.CheckCircle"
+                       Class="nav-sub-link">Features-Benefits</MudNavLink>
+        </ChildContent>
+    </MudNavGroup>
+</MudNavMenu>

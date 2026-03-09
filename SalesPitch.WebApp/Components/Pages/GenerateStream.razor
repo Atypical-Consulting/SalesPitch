@@ -1,0 +1,342 @@
+﻿@page "/generate-stream"
+@inject ISalesPitchService SalesPitchService
+@inject ISnackbar Snackbar
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Generate Sales Pitch - Live Streaming</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Typo="Typo.h4" Class="mb-6">Generate Sales Pitch - Live Stream</MudText>
+    
+    <MudAlert Severity="Severity.Info" Class="mb-6">
+        <MudText>Watch your sales pitch generate in real-time with AI streaming responses!</MudText>
+    </MudAlert>
+    
+    <MudGrid>
+        <MudItem xs="12" lg="6">
+            <MudPaper Class="pa-6" Elevation="3">
+                <MudText Typo="Typo.h6" Class="mb-4">Product Information</MudText>
+                
+                <EditForm Model="@_request" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    
+                    <MudStack Spacing="4">
+                        <MudTextField Label="Product Name" 
+                                     @bind-Value="_request.Product" 
+                                     For="@(() => _request.Product)"
+                                     Variant="Variant.Outlined"
+                                     Required="true"
+                                     Disabled="@_isGenerating"
+                                     HelperText="Enter the name of your product or service" />
+                        
+                        <MudTextField Label="Price" 
+                                     @bind-Value="_request.Price" 
+                                     For="@(() => _request.Price)"
+                                     Variant="Variant.Outlined"
+                                     Required="true"
+                                     Disabled="@_isGenerating"
+                                     HelperText="e.g., $99/month, €299, Free trial" />
+                        
+                        <MudTextField Label="Features" 
+                                     @bind-Value="_request.Features" 
+                                     For="@(() => _request.Features)"
+                                     Variant="Variant.Outlined"
+                                     Lines="3"
+                                     Required="true"
+                                     Disabled="@_isGenerating"
+                                     HelperText="List the key features of your product" />
+                        
+                        <MudTextField Label="Benefits" 
+                                     @bind-Value="_request.Benefits" 
+                                     For="@(() => _request.Benefits)"
+                                     Variant="Variant.Outlined"
+                                     Lines="3"
+                                     Required="true"
+                                     Disabled="@_isGenerating"
+                                     HelperText="Describe the benefits your customers will gain" />
+                        
+                        <MudSelect Label="Sales Framework" 
+                                  @bind-Value="_request.Framework" 
+                                  Variant="Variant.Outlined"
+                                  Disabled="@_isGenerating"
+                                  AnchorOrigin="Origin.BottomCenter">
+                            @foreach (var framework in Enum.GetValues<SalesPitchFramework>())
+                            {
+                                <MudSelectItem Value="@framework">@GetFrameworkDisplayName(framework)</MudSelectItem>
+                            }
+                        </MudSelect>
+                        
+                        <MudSelect Label="Language" 
+                                  @bind-Value="_request.Language" 
+                                  Variant="Variant.Outlined"
+                                  Disabled="@_isGenerating"
+                                  AnchorOrigin="Origin.BottomCenter">
+                            @foreach (var language in Enum.GetValues<SupportedLanguage>())
+                            {
+                                <MudSelectItem Value="@language">@language.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                        
+                        <MudSwitch @bind-Value="_request.IsDemo" 
+                                  Label="Use Demo Data" 
+                                  Color="Color.Primary"
+                                  Disabled="@_isGenerating"
+                                  UnCheckedColor="Color.Default" />
+                        
+                        <MudStack Row="true" Spacing="3" Class="mt-4">
+                            <MudButton ButtonType="ButtonType.Submit" 
+                                      Variant="Variant.Filled" 
+                                      Color="Color.Primary"
+                                      StartIcon="@Icons.Material.Filled.Stream"
+                                      Loading="@_isGenerating"
+                                      Disabled="@_isGenerating">
+                                @(_isGenerating ? "Streaming..." : "Start Streaming")
+                            </MudButton>
+                            
+                            @if (_isGenerating)
+                            {
+                                <MudButton Variant="Variant.Outlined" 
+                                          Color="Color.Error"
+                                          StartIcon="@Icons.Material.Filled.Stop"
+                                          OnClick="@StopStreaming">
+                                    Stop
+                                </MudButton>
+                            }
+                            else
+                            {
+                                <MudButton Variant="Variant.Outlined" 
+                                          Color="Color.Secondary"
+                                          StartIcon="@Icons.Material.Filled.Clear"
+                                          OnClick="@ClearForm">
+                                    Clear
+                                </MudButton>
+                                
+                                <MudButton Variant="Variant.Text" 
+                                          Color="Color.Info"
+                                          StartIcon="@Icons.Material.Filled.AutoFixHigh"
+                                          OnClick="@LoadDemoData">
+                                    Load Demo
+                                </MudButton>
+                            }
+                        </MudStack>
+                    </MudStack>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+        
+        <MudItem xs="12" lg="6">
+            <MudPaper Class="pa-6" Elevation="3" Style="min-height: 600px;">
+                <MudStack Spacing="3">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h6">Live Sales Pitch Generation</MudText>
+                        <MudStack Row="true" Spacing="2">
+                            @if (!string.IsNullOrEmpty(_streamedContent) && !_isGenerating)
+                            {
+                                <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" 
+                                              Color="Color.Primary"
+                                              OnClick="@CopyToClipboard"
+                                              Title="Copy to clipboard" />
+                            }
+                            @if (_isGenerating)
+                            {
+                                <MudChip T="string" Text="@($"Words: {_wordCount}")" 
+                                        Color="Color.Info" 
+                                        Size="Size.Small" />
+                            }
+                        </MudStack>
+                    </MudStack>
+                    
+                    @if (_isGenerating)
+                    {
+                        <MudStack Spacing="3">
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                                <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
+                                <MudText Typo="Typo.body2" Color="Color.Primary">
+                                    Streaming live... (@GetFrameworkDisplayName(_request.Framework))
+                                </MudText>
+                            </MudStack>
+                            
+                            <MudPaper Class="pa-4" Elevation="1" Style="background-color: var(--mud-palette-background-grey); max-height: 500px; overflow-y: auto;">
+                                <MudText Typo="Typo.body1" Style="white-space: pre-wrap; line-height: 1.6;" id="streaming-content">
+                                    @_streamedContent
+                                    @if (_isGenerating)
+                                    {
+                                        <span class="blinking-cursor">|</span>
+                                    }
+                                </MudText>
+                            </MudPaper>
+                        </MudStack>
+                    }
+                    else if (!string.IsNullOrEmpty(_streamedContent))
+                    {
+                        <MudStack Spacing="3">
+                            <MudChip T="string" Text="@($"Framework: {GetFrameworkDisplayName(_request.Framework)} • Words: {_wordCount}")" 
+                                    Color="Color.Success" 
+                                    Size="Size.Small" />
+                            
+                            <MudPaper Class="pa-4" Elevation="1" Style="background-color: var(--mud-palette-background-grey); max-height: 500px; overflow-y: auto;">
+                                <MudText Typo="Typo.body1" Style="white-space: pre-wrap; line-height: 1.6;">
+                                    @_streamedContent
+                                </MudText>
+                            </MudPaper>
+                            
+                            <MudAlert Severity="Severity.Success" Class="mt-2">
+                                <MudText>Generation completed successfully!</MudText>
+                            </MudAlert>
+                        </MudStack>
+                    }
+                    else
+                    {
+                        <MudStack AlignItems="AlignItems.Center" Spacing="3" Class="pa-8">
+                            <MudIcon Icon="@Icons.Material.Filled.Stream" Size="Size.Large" Color="Color.Primary" />
+                            <MudText Typo="Typo.h6" Align="Align.Center">Ready for live generation?</MudText>
+                            <MudText Typo="Typo.body1" Color="Color.Secondary" Align="Align.Center">
+                                Fill out the form and click "Start Streaming" to watch your sales pitch generate in real-time.
+                            </MudText>
+                        </MudStack>
+                    }
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+<style>
+    .blinking-cursor {
+        animation: blink 1s infinite;
+        color: var(--mud-palette-primary);
+        font-weight: bold;
+    }
+</style>
+
+@code {
+    private SalesPitchRequest _request = new();
+    private string _streamedContent = string.Empty;
+    private bool _isGenerating;
+    private int _wordCount;
+    private CancellationTokenSource? _cancellationTokenSource;
+
+    private async Task HandleValidSubmit()
+    {
+        if (_isGenerating) return;
+        
+        try
+        {
+            _isGenerating = true;
+            _streamedContent = string.Empty;
+            _wordCount = 0;
+            _cancellationTokenSource = new CancellationTokenSource();
+            StateHasChanged();
+            
+            if (_request.IsDemo)
+            {
+                LoadDemoDataIntoRequest();
+            }
+            
+            var streamResult = await SalesPitchService.GenerateSalesPitchStreamAsync(_request, _cancellationTokenSource.Token);
+            
+            await foreach (var chunk in streamResult.WithCancellation(_cancellationTokenSource.Token))
+            {
+                if (_cancellationTokenSource.Token.IsCancellationRequested)
+                    break;
+                    
+                _streamedContent += chunk;
+                _wordCount = _streamedContent.Split(' ', StringSplitOptions.RemoveEmptyEntries).Length;
+                StateHasChanged();
+                
+                // Auto-scroll to bottom
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", "streaming-content");
+                
+                // Small delay for better UX
+                await Task.Delay(50, _cancellationTokenSource.Token);
+            }
+            
+            if (!_cancellationTokenSource.Token.IsCancellationRequested && !string.IsNullOrEmpty(_streamedContent))
+            {
+                Snackbar.Add("Sales pitch generation completed!", Severity.Success);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            Snackbar.Add("Generation stopped by user", Severity.Info);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error during streaming: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isGenerating = false;
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+            StateHasChanged();
+        }
+    }
+
+    private void StopStreaming()
+    {
+        _cancellationTokenSource?.Cancel();
+        _isGenerating = false;
+        StateHasChanged();
+    }
+
+    private void ClearForm()
+    {
+        _request = new SalesPitchRequest();
+        _streamedContent = string.Empty;
+        _wordCount = 0;
+    }
+
+    private void LoadDemoData()
+    {
+        _request.Product = "Microsoft Power BI Premium";
+        _request.Price = "16,90 € by user/month";
+        _request.Features = "Multiple data sources, Interactive reporting, Custom dashboards, Sharing and collaboration, Integration with other Microsoft services, Real-time data updates, Security and data governance";
+        _request.Benefits = "Informed decision making, Increased productivity, Accessibility, Flexibility, Scalability, Continuous improvement";
+        _request.Framework = SalesPitchFramework.Storytelling;
+        _request.Language = SupportedLanguage.English;
+        _request.IsDemo = true;
+    }
+
+    private void LoadDemoDataIntoRequest()
+    {
+        if (_request.IsDemo)
+        {
+            _request.Product = "Microsoft Power BI Premium";
+            _request.Price = "16,90 € by user/month";
+            _request.Features = "Multiple data sources, Interactive reporting, Custom dashboards, Sharing and collaboration, Integration with other Microsoft services, Real-time data updates, Security and data governance";
+            _request.Benefits = "Informed decision making, Increased productivity, Accessibility, Flexibility, Scalability, Continuous improvement";
+        }
+    }
+
+    private static string GetFrameworkDisplayName(SalesPitchFramework framework)
+    {
+        return framework switch
+        {
+            SalesPitchFramework.AIDA => "AIDA (Attention, Interest, Desire, Action)",
+            SalesPitchFramework.PAS => "PAS (Problem-Agitate-Solve)",
+            SalesPitchFramework.USP => "USP (Unique Selling Proposition)",
+            SalesPitchFramework.FeaturesBenefits => "Features-Benefits",
+            SalesPitchFramework.Storytelling => "Storytelling",
+            SalesPitchFramework.WIIFM => "WIIFM (What's In It For Me)",
+            SalesPitchFramework.Youtility => "Youtility",
+            SalesPitchFramework.FAB => "FAB (Features, Advantages, Benefits)",
+            SalesPitchFramework.HHE => "HHE (Headline, Hook, Empathy)",
+            SalesPitchFramework.SUSPENSE => "SUSPENSE (Surprise, Uniqueness, Specifics, Promise, Excitement, Newness, Story)",
+            _ => framework.ToString()
+        };
+    }
+
+    private async Task CopyToClipboard()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", _streamedContent);
+            Snackbar.Add("Copied to clipboard!", Severity.Success);
+        }
+        catch
+        {
+            Snackbar.Add("Failed to copy to clipboard", Severity.Warning);
+        }
+    }
+}

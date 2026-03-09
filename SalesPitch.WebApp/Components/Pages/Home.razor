@@ -1,0 +1,195 @@
+﻿@page "/"
+
+<PageTitle>SalesPitch - AI-Powered Sales Pitch Generator</PageTitle>
+
+<div class="hero-section">
+    <MudContainer MaxWidth="MaxWidth.ExtraLarge">
+        <!-- Hero Section -->
+        <MudGrid Justify="Justify.Center" Class="mb-16">
+            <MudItem xs="12" lg="10" xl="8">
+                <MudPaper Class="hero-card pa-12" Elevation="4">
+                    <MudStack Spacing="8" AlignItems="AlignItems.Center">
+                        <!-- Hero Icon with Gradient Background -->
+                        <div class="hero-icon-container">
+                            <MudIcon Icon="Icons.Material.Filled.AutoAwesome" Size="Size.Large" Class="hero-icon" />
+                        </div>
+                        
+                        <!-- Hero Title -->
+                        <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                            <MudText Typo="Typo.h2" Align="Align.Center" Class="hero-title">
+                                Transform Ideas into
+                                <span class="gradient-text">Powerful Sales Pitches</span>
+                            </MudText>
+                            
+                            <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Secondary" Class="hero-subtitle">
+                                AI-Powered Sales Pitch Generator using OpenAI GPT-4o
+                            </MudText>
+                        </MudStack>
+                        
+                        <!-- Hero Description -->
+                        <MudText Typo="Typo.body1" Align="Align.Center" Class="hero-description">
+                            Create compelling, professional sales pitches in seconds using proven frameworks 
+                            and the power of artificial intelligence. Support for multiple languages and 
+                            sales methodologies that convert prospects into customers.
+                        </MudText>
+                        
+                        <!-- CTA Buttons -->
+                        <MudStack Row="true" Spacing="4" Justify="Justify.Center" Class="hero-buttons">
+                            <MudButton Variant="Variant.Filled" 
+                                      Color="Color.Primary" 
+                                      StartIcon="@Icons.Material.Filled.AutoAwesome" 
+                                      Size="Size.Large"
+                                      Class="cta-primary"
+                                      Href="/generate">
+                                Generate Pitch
+                            </MudButton>
+                            <MudButton Variant="Variant.Outlined" 
+                                      Color="Color.Primary" 
+                                      StartIcon="@Icons.Material.Filled.Rocket" 
+                                      Size="Size.Large"
+                                      Class="cta-secondary"
+                                      Href="/demo">
+                                Try Demo
+                            </MudButton>
+                            <MudButton Variant="Variant.Text" 
+                                      Color="Color.Secondary" 
+                                      StartIcon="@Icons.Material.Filled.Psychology" 
+                                      Size="Size.Large"
+                                      Href="/frameworks">
+                                Learn Frameworks
+                            </MudButton>
+                        </MudStack>
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Features Section -->
+        <MudGrid Spacing="6" Class="features-section">
+            <MudItem xs="12">
+                <MudText Typo="Typo.h4" Align="Align.Center" Class="section-title mb-8">
+                    Why Choose SalesPitch?
+                </MudText>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudCard Class="feature-card h-100" Elevation="3">
+                    <MudCardContent Class="pa-8">
+                        <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                            <div class="feature-icon-container">
+                                <MudIcon Icon="Icons.Material.Filled.Psychology" Size="Size.Large" Color="Color.Primary" />
+                            </div>
+                            <MudText Typo="Typo.h6" Align="Align.Center" Class="feature-title">
+                                10 Proven Frameworks
+                            </MudText>
+                            <MudText Typo="Typo.body2" Align="Align.Center" Class="feature-description">
+                                Choose from AIDA, PAS, USP, Storytelling, WIIFM, Youtility, FAB, HHE, SUSPENSE, 
+                                and Features-Benefits frameworks
+                            </MudText>
+                            <MudChip T="string" Text="Proven Methods" Color="Color.Primary" Size="Size.Small" />
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudCard Class="feature-card h-100" Elevation="3">
+                    <MudCardContent Class="pa-8">
+                        <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                            <div class="feature-icon-container">
+                                <MudIcon Icon="Icons.Material.Filled.Language" Size="Size.Large" Color="Color.Success" />
+                            </div>
+                            <MudText Typo="Typo.h6" Align="Align.Center" Class="feature-title">
+                                Global Reach
+                            </MudText>
+                            <MudText Typo="Typo.body2" Align="Align.Center" Class="feature-description">
+                                Generate pitches in English, French, German, and Spanish with 
+                                native-quality results and cultural context
+                            </MudText>
+                            <MudChip T="string" Text="4 Languages" Color="Color.Success" Size="Size.Small" />
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+            
+            <MudItem xs="12" md="4">
+                <MudCard Class="feature-card h-100" Elevation="3">
+                    <MudCardContent Class="pa-8">
+                        <MudStack Spacing="4" AlignItems="AlignItems.Center">
+                            <div class="feature-icon-container">
+                                <MudIcon Icon="Icons.Material.Filled.Bolt" Size="Size.Large" Color="Color.Warning" />
+                            </div>
+                            <MudText Typo="Typo.h6" Align="Align.Center" Class="feature-title">
+                                Live Generation
+                            </MudText>
+                            <MudText Typo="Typo.body2" Align="Align.Center" Class="feature-description">
+                                Watch your sales pitch generate in real-time with streaming AI responses 
+                                and instant feedback
+                            </MudText>
+                            <MudChip T="string" Text="Real-time" Color="Color.Warning" Size="Size.Small" />
+                        </MudStack>
+                    </MudCardContent>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+
+        <!-- Stats Section -->
+        <MudGrid Justify="Justify.Center" Class="stats-section mt-16">
+            <MudItem xs="12" lg="10">
+                <MudPaper Class="stats-container pa-8" Elevation="2">
+                    <MudGrid Spacing="6">
+                        <MudItem xs="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h3" Class="stats-number">10</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Frameworks</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h3" Class="stats-number">4</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Languages</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h3" Class="stats-number">750</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Max Words</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="6" md="3">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudText Typo="Typo.h3" Class="stats-number">∞</MudText>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Possibilities</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+
+        <!-- CTA Section -->
+        <MudGrid Justify="Justify.Center" Class="cta-section mt-16">
+            <MudItem xs="12" md="8">
+                <MudPaper Class="cta-container pa-8" Elevation="3">
+                    <MudStack Spacing="6" AlignItems="AlignItems.Center">
+                        <MudText Typo="Typo.h4" Align="Align.Center" Class="cta-title">
+                            Ready to Create Your First Sales Pitch?
+                        </MudText>
+                        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Secondary">
+                            Join thousands of professionals who trust SalesPitch for their sales content needs.
+                        </MudText>
+                        <MudButton Variant="Variant.Filled" 
+                                  Color="Color.Primary" 
+                                  Size="Size.Large"
+                                  StartIcon="@Icons.Material.Filled.AutoAwesome"
+                                  Class="cta-final"
+                                  Href="/generate">
+                            Get Started Now
+                        </MudButton>
+                    </MudStack>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</div>
+

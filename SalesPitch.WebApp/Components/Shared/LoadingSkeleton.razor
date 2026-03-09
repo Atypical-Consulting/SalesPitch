@@ -1,0 +1,41 @@
+﻿<div class="skeleton-container">
+    @if (Type == SkeletonType.Text)
+    {
+        <div class="skeleton skeleton-text" style="width: @Width; height: @Height;"></div>
+    }
+    else if (Type == SkeletonType.Card)
+    {
+        <div class="skeleton-card">
+            <div class="skeleton skeleton-header"></div>
+            <div class="skeleton skeleton-line"></div>
+            <div class="skeleton skeleton-line" style="width: 80%;"></div>
+            <div class="skeleton skeleton-line" style="width: 60%;"></div>
+        </div>
+    }
+    else if (Type == SkeletonType.Avatar)
+    {
+        <div class="skeleton skeleton-avatar" style="width: @Width; height: @Height;"></div>
+    }
+    else if (Type == SkeletonType.Button)
+    {
+        <div class="skeleton skeleton-button" style="width: @Width; height: @Height;"></div>
+    }
+</div>
+
+@code {
+    [Parameter] public SkeletonType Type { get; set; } = SkeletonType.Text;
+    [Parameter] public string Width { get; set; } = "100%";
+    [Parameter] public string Height { get; set; } = "1rem";
+}
+
+
+@* Enum for skeleton types *@
+@code {
+    public enum SkeletonType
+    {
+        Text,
+        Card,
+        Avatar,
+        Button
+    }
+}

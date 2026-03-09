@@ -1,0 +1,374 @@
+@page "/frameworks"
+@using SalesPitch.WebApp.Models
+
+<PageTitle>Sales Frameworks - SalesPitch</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="frameworks-page">
+    <!-- Page Header -->
+    <MudGrid Justify="Justify.Center" Class="mb-8">
+        <MudItem xs="12" lg="10">
+            <div class="page-header">
+                <div class="page-icon-container">
+                    <MudIcon Icon="Icons.Material.Filled.Psychology" Size="Size.Large" Class="page-icon" />
+                </div>
+                <MudText Typo="Typo.h3" Align="Align.Center" Class="page-title mb-4">
+                    Sales Frameworks Guide
+                </MudText>
+                <MudText Typo="Typo.h6" Align="Align.Center" Color="Color.Secondary" Class="page-subtitle">
+                    Master the art of persuasion with proven sales methodologies. Choose the right framework for your product and audience.
+                </MudText>
+            </div>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Quick Overview -->
+    <MudGrid Justify="Justify.Center" Class="mb-12">
+        <MudItem xs="12" lg="10">
+            <MudPaper Class="overview-card pa-8" Elevation="3">
+                <MudStack Spacing="4">
+                    <MudText Typo="Typo.h5" Class="overview-title">
+                        <MudIcon Icon="Icons.Material.Filled.Lightbulb" Class="mr-2" />
+                        Why Use Sales Frameworks?
+                    </MudText>
+                    <MudText Typo="Typo.body1" Class="overview-text">
+                        Sales frameworks provide structured approaches to crafting compelling messages that resonate with your audience. 
+                        Each framework targets specific psychological triggers and customer needs, helping you convert prospects into customers more effectively.
+                    </MudText>
+                    <MudDivider />
+                    <MudGrid Spacing="4">
+                        <MudItem xs="12" md="4">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIcon Icon="Icons.Material.Filled.Groups" Size="Size.Large" Color="Color.Primary" />
+                                <MudText Typo="Typo.h6" Align="Align.Center">10 Frameworks</MudText>
+                                <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">Proven methodologies</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIcon Icon="Icons.Material.Filled.TrendingUp" Size="Size.Large" Color="Color.Success" />
+                                <MudText Typo="Typo.h6" Align="Align.Center">Higher Conversions</MudText>
+                                <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">Structured persuasion</MudText>
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudStack AlignItems="AlignItems.Center" Spacing="2">
+                                <MudIcon Icon="Icons.Material.Filled.Speed" Size="Size.Large" Color="Color.Warning" />
+                                <MudText Typo="Typo.h6" Align="Align.Center">Quick Results</MudText>
+                                <MudText Typo="Typo.body2" Align="Align.Center" Color="Color.Secondary">Instant framework selection</MudText>
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+    <!-- Frameworks Grid -->
+    <MudGrid Spacing="6">
+        @foreach (var framework in GetFrameworksInfo())
+        {
+            <MudItem xs="12" lg="6">
+                <MudCard Class="framework-card h-100" Elevation="4">
+                    <MudCardContent Class="pa-6">
+                        <MudStack Spacing="4">
+                            <!-- Framework Header -->
+                            <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="3">
+                                <div class="framework-icon-container">
+                                    <MudIcon Icon="@framework.Icon" Size="Size.Medium" Color="Color.Primary" />
+                                </div>
+                                <MudStack Spacing="1">
+                                    <MudText Typo="Typo.h5" Class="framework-title">@framework.Name</MudText>
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">@framework.Acronym</MudText>
+                                </MudStack>
+                            </MudStack>
+                            
+                            <MudDivider />
+                            
+                            <!-- Description -->
+                            <MudText Typo="Typo.body1" Class="framework-description">
+                                @framework.Description
+                            </MudText>
+                            
+                            <!-- Best For Section -->
+                            <MudStack Spacing="2">
+                                <MudText Typo="Typo.subtitle1" Class="section-title">
+                                    <MudIcon Icon="Icons.Material.Filled.Star" Size="Size.Small" Class="mr-1" />
+                                    Best For:
+                                </MudText>
+                                <MudStack Spacing="1">
+                                    @foreach (var useCase in framework.BestFor)
+                                    {
+                                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="1">
+                                            <MudIcon Icon="Icons.Material.Filled.CheckCircle" Size="Size.Small" Color="Color.Success" />
+                                            <MudText Typo="Typo.body2">@useCase</MudText>
+                                        </MudStack>
+                                    }
+                                </MudStack>
+                            </MudStack>
+                            
+                            <!-- Structure Section -->
+                            <MudStack Spacing="2">
+                                <MudText Typo="Typo.subtitle1" Class="section-title">
+                                    <MudIcon Icon="Icons.Material.Filled.Architecture" Size="Size.Small" Class="mr-1" />
+                                    Structure:
+                                </MudText>
+                                <MudStack Spacing="1">
+                                    @foreach (var step in framework.Structure)
+                                    {
+                                        <MudPaper Class="structure-step pa-3" Elevation="1">
+                                            <MudText Typo="Typo.body2" Class="step-text">
+                                                <strong>@step.Title:</strong> @step.Description
+                                            </MudText>
+                                        </MudPaper>
+                                    }
+                                </MudStack>
+                            </MudStack>
+                        </MudStack>
+                    </MudCardContent>
+                    
+                    <!-- Action Footer -->
+                    <MudCardActions Class="pa-4 pt-0">
+                        <MudButton Variant="Variant.Filled" 
+                                  Color="Color.Primary" 
+                                  StartIcon="Icons.Material.Filled.AutoAwesome"
+                                  Class="framework-try-button"
+                                  Href="@($"/generate?framework={framework.Framework}")">
+                            Try @framework.Name
+                        </MudButton>
+                        <MudSpacer />
+                        <MudChip T="string" Text="@framework.Difficulty" 
+                                Color="@GetDifficultyColor(framework.Difficulty)" 
+                                Size="Size.Small" />
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+
+    <!-- Call to Action -->
+    <MudGrid Justify="Justify.Center" Class="cta-section mt-16">
+        <MudItem xs="12" md="8">
+            <MudPaper Class="cta-container pa-8" Elevation="3">
+                <MudStack Spacing="6" AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h4" Align="Align.Center" Class="cta-title">
+                        Ready to Create Your Perfect Sales Pitch?
+                    </MudText>
+                    <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Secondary">
+                        Choose a framework that matches your product and start generating compelling sales content with AI.
+                    </MudText>
+                    <MudButton Variant="Variant.Filled" 
+                              Color="Color.Primary" 
+                              Size="Size.Large"
+                              StartIcon="@Icons.Material.Filled.AutoAwesome"
+                              Class="cta-final"
+                              Href="/generate">
+                        Start Generating Now
+                    </MudButton>
+                </MudStack>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+@code {
+    public class FrameworkInfo
+    {
+        public SalesPitchFramework Framework { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Acronym { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+        public string[] BestFor { get; set; } = Array.Empty<string>();
+        public FrameworkStep[] Structure { get; set; } = Array.Empty<FrameworkStep>();
+        public string Icon { get; set; } = Icons.Material.Filled.Psychology;
+        public string Difficulty { get; set; } = "Medium";
+    }
+
+    public class FrameworkStep
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
+    }
+
+    private FrameworkInfo[] GetFrameworksInfo()
+    {
+        return new[]
+        {
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.AIDA,
+                Name = "AIDA",
+                Acronym = "Attention, Interest, Desire, Action",
+                Description = "A classic formula that guides prospects through a logical progression from awareness to purchase. Perfect for creating structured, persuasive content that converts.",
+                Icon = Icons.Material.Filled.Visibility,
+                Difficulty = "Easy",
+                BestFor = new[] { "Luxury vacations or travel packages", "Fitness equipment and wellness products", "High-end electronics or gadgets", "Personal development courses" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Attention", Description = "Grab the reader's attention with a compelling headline or opening" },
+                    new FrameworkStep { Title = "Interest", Description = "Build interest by highlighting relevant benefits and features" },
+                    new FrameworkStep { Title = "Desire", Description = "Create desire by showing how the product improves their life" },
+                    new FrameworkStep { Title = "Action", Description = "Prompt immediate action with a clear, compelling call-to-action" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.PAS,
+                Name = "PAS",
+                Acronym = "Problem, Agitate, Solve",
+                Description = "Identifies pain points, amplifies the urgency, then presents your solution as the relief. Highly effective for problem-aware audiences.",
+                Icon = Icons.Material.Filled.Build,
+                Difficulty = "Medium",
+                BestFor = new[] { "Home security systems", "Pain relief products or medications", "Debt relief services", "Car repair or maintenance services" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Problem", Description = "Identify and clearly state the customer's main problem" },
+                    new FrameworkStep { Title = "Agitate", Description = "Amplify the pain by showing consequences of inaction" },
+                    new FrameworkStep { Title = "Solve", Description = "Present your product as the ideal solution to their problem" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.USP,
+                Name = "USP",
+                Acronym = "Unique Selling Proposition",
+                Description = "Focuses on what makes your product uniquely valuable. Ideal when you have clear competitive advantages or distinctive features.",
+                Icon = Icons.Material.Filled.Diamond,
+                Difficulty = "Medium",
+                BestFor = new[] { "Specialty or niche products", "High-end or luxury goods", "Personalized or customized products", "Products with proprietary technology" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Unique Value", Description = "Clearly state what makes your product different and better" },
+                    new FrameworkStep { Title = "Proof Points", Description = "Provide evidence and credibility for your claims" },
+                    new FrameworkStep { Title = "Benefits", Description = "Show how this uniqueness directly benefits the customer" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.FeaturesBenefits,
+                Name = "Features-Benefits",
+                Acronym = "Features → Benefits",
+                Description = "Systematically presents product features and translates them into meaningful customer benefits. Great for complex or technical products.",
+                Icon = Icons.Material.Filled.ListAlt,
+                Difficulty = "Easy",
+                BestFor = new[] { "Home appliances or kitchen gadgets", "Personal grooming or beauty products", "Automobiles", "Office equipment or technology products" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Feature", Description = "Present a specific product feature or capability" },
+                    new FrameworkStep { Title = "Benefit", Description = "Explain how this feature improves the customer's life" },
+                    new FrameworkStep { Title = "Proof", Description = "Provide evidence or examples of the benefit in action" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.Storytelling,
+                Name = "Storytelling",
+                Acronym = "Story-driven Persuasion",
+                Description = "Uses narrative to create emotional connections and make your message memorable. Perfect for building brand affinity and trust.",
+                Icon = Icons.Material.Filled.MenuBook,
+                Difficulty = "Hard",
+                BestFor = new[] { "Charitable organizations or non-profits", "Personal growth or motivational products", "Eco-friendly or sustainable products", "Adventure travel or outdoor recreation" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Setup", Description = "Introduce characters and situation your audience relates to" },
+                    new FrameworkStep { Title = "Conflict", Description = "Present the challenge or problem that needs solving" },
+                    new FrameworkStep { Title = "Resolution", Description = "Show how your product provides the solution or transformation" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.WIIFM,
+                Name = "WIIFM",
+                Acronym = "What's In It For Me",
+                Description = "Directly addresses customer self-interest by focusing entirely on personal benefits and outcomes. Highly effective for self-improvement products.",
+                Icon = Icons.Material.Filled.Person,
+                Difficulty = "Easy",
+                BestFor = new[] { "Self-help or personal development", "Career development or job search services", "Investment or financial planning", "Health and wellness products" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Personal Benefit", Description = "Lead with the most compelling personal advantage" },
+                    new FrameworkStep { Title = "Outcome", Description = "Paint a picture of their improved future state" },
+                    new FrameworkStep { Title = "Path", Description = "Show them the simple path to achieve this outcome" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.Youtility,
+                Name = "Youtility",
+                Acronym = "Utility-first Marketing",
+                Description = "Leads with value and helpfulness rather than sales pressure. Builds trust by being genuinely useful before asking for anything.",
+                Icon = Icons.Material.Filled.Handyman,
+                Difficulty = "Medium",
+                BestFor = new[] { "Technical or software products", "Health and wellness services", "Personal finance or investment products", "Home improvement or DIY products" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Useful Information", Description = "Provide genuinely helpful content or insights" },
+                    new FrameworkStep { Title = "Build Trust", Description = "Demonstrate expertise and commitment to their success" },
+                    new FrameworkStep { Title = "Soft Introduction", Description = "Naturally introduce how your product can help further" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.FAB,
+                Name = "FAB",
+                Acronym = "Features, Advantages, Benefits",
+                Description = "A detailed progression from product attributes to customer value. Excellent for complex products requiring thorough explanation.",
+                Icon = Icons.Material.Filled.Engineering,
+                Difficulty = "Medium",
+                BestFor = new[] { "Home improvement or remodeling services", "Fitness or wellness products", "Personal development courses", "Technology or software products" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Features", Description = "Present specific product capabilities and attributes" },
+                    new FrameworkStep { Title = "Advantages", Description = "Explain why these features matter compared to alternatives" },
+                    new FrameworkStep { Title = "Benefits", Description = "Connect advantages to meaningful customer outcomes" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.HHE,
+                Name = "HHE",
+                Acronym = "Headline, Hook, Empathy",
+                Description = "Creates immediate connection through empathy while hooking attention. Perfect for emotional or personal topics.",
+                Icon = Icons.Material.Filled.Favorite,
+                Difficulty = "Medium",
+                BestFor = new[] { "Personal growth or motivational products", "Health and wellness services", "Debt relief services", "Career development or job search" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Headline", Description = "Create a compelling, attention-grabbing headline" },
+                    new FrameworkStep { Title = "Hook", Description = "Deliver an intriguing hook that draws them in" },
+                    new FrameworkStep { Title = "Empathy", Description = "Show understanding and connection with their situation" }
+                }
+            },
+            new FrameworkInfo
+            {
+                Framework = SalesPitchFramework.SUSPENSE,
+                Name = "SUSPENSE",
+                Acronym = "Surprise, Uniqueness, Specifics, Promise, Excitement, Newness, Story",
+                Description = "Creates anticipation and excitement through multiple engagement triggers. Best for innovative or cutting-edge products.",
+                Icon = Icons.Material.Filled.FlashOn,
+                Difficulty = "Hard",
+                BestFor = new[] { "Thrill-seeking experiences or adventure travel", "Cutting-edge technology or gadgets", "High-end fashion or luxury products", "Next-generation gaming or entertainment" },
+                Structure = new[]
+                {
+                    new FrameworkStep { Title = "Surprise", Description = "Start with something unexpected or counterintuitive" },
+                    new FrameworkStep { Title = "Uniqueness", Description = "Highlight what makes this completely different" },
+                    new FrameworkStep { Title = "Specifics", Description = "Provide concrete details and proof points" },
+                    new FrameworkStep { Title = "Promise", Description = "Make a compelling promise about outcomes" },
+                    new FrameworkStep { Title = "Excitement", Description = "Build emotional energy and anticipation" },
+                    new FrameworkStep { Title = "Newness", Description = "Emphasize innovation and cutting-edge nature" },
+                    new FrameworkStep { Title = "Story", Description = "Wrap it in a compelling narrative" }
+                }
+            }
+        };
+    }
+
+    private Color GetDifficultyColor(string difficulty)
+    {
+        return difficulty.ToLower() switch
+        {
+            "easy" => Color.Success,
+            "medium" => Color.Warning,
+            "hard" => Color.Error,
+            _ => Color.Default
+        };
+    }
+}

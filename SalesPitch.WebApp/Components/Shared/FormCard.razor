@@ -1,0 +1,35 @@
+﻿<MudPaper Class="@($"form-card {Class}")" Elevation="@Elevation">
+    <MudStack Spacing="6">
+        @if (!string.IsNullOrEmpty(Title))
+        {
+            <div class="form-header">
+                @if (!string.IsNullOrEmpty(Icon))
+                {
+                    <MudIcon Icon="@Icon" Size="Size.Medium" Color="Color.Primary" Class="form-icon" />
+                }
+                <MudStack Spacing="2">
+                    <MudText Typo="Typo.h5" Class="form-title">@Title</MudText>
+                    @if (!string.IsNullOrEmpty(Subtitle))
+                    {
+                        <MudText Typo="Typo.body2" Color="Color.Secondary" Class="form-subtitle">@Subtitle</MudText>
+                    }
+                </MudStack>
+            </div>
+            <MudDivider />
+        }
+        
+        <div class="form-content">
+            @ChildContent
+        </div>
+    </MudStack>
+</MudPaper>
+
+@code {
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public string? Subtitle { get; set; }
+    [Parameter] public string? Icon { get; set; }
+    [Parameter] public string Class { get; set; } = "";
+    [Parameter] public int Elevation { get; set; } = 3;
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+}
+
