@@ -8,12 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Betalgo.Ranul.OpenAI" Version="9.0.4" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.5" />
-    <PackageReference Include="MudBlazor" Version="8.7.0" />
-    <PackageReference Include="Scrutor" Version="6.0.1" />
+    <PackageReference Include="Betalgo.Ranul.OpenAI" Version="9.2.6" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.14" />
+    <PackageReference Include="MudBlazor" Version="8.15.0" />
+    <PackageReference Include="Scrutor" Version="6.1.0" />
   </ItemGroup>
 
 </Project>
