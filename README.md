@@ -1,3 +1,5 @@
+![SalesPitch banner](.github/banner.png)
+
 # SalesPitch
 
 > **Generate tailored, professional sales pitches in seconds using AI — stop choosing between generic copy and hours of personalization.**
