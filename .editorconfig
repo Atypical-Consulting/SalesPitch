@@ -1,0 +1,26 @@
+# EditorConfig — portfolio house style (universal base) · https://editorconfig.org
+# For non-.NET repos: language-agnostic formatting only (each language keeps its
+# own formatter — rustfmt, swiftformat, prettier, gofmt…). LF + UTF-8 + final
+# newline + trimmed trailing whitespace everywhere.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Data / markup / web files: 2-space indent
+[*.{json,jsonc,yml,yaml,xml,toml,html,css,scss,ts,tsx,js,jsx,vue,svelte}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false   # trailing two spaces are meaningful line breaks
+
+[*.{go,Makefile}]
+indent_style = tab
+
+[*.{rs,swift,kt,java,py}]
+indent_size = 4
