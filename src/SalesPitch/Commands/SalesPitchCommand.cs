@@ -40,7 +40,7 @@ public sealed class SalesPitchCommand
     /// <param name="context">The command context</param>
     /// <param name="settings">The command settings</param>
     /// <returns>The exit code</returns>
-    public override async Task<int> ExecuteAsync(
+    protected override async Task<int> ExecuteAsync(
         CommandContext context,
         SalesPitchSettings settings,
         CancellationToken cancellationToken)
